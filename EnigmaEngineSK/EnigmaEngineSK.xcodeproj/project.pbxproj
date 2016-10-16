@@ -13,8 +13,10 @@
 		C91C160E1DB13B030006757C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C160D1DB13B030006757C /* GameScene.swift */; };
 		C91C16101DB13B030006757C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C160F1DB13B030006757C /* GameViewController.swift */; };
 		C91C16131DB13B030006757C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91C16111DB13B030006757C /* Main.storyboard */; };
-		C91C16151DB13B030006757C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C91C16141DB13B030006757C /* Assets.xcassets */; };
 		C91C16181DB13B030006757C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91C16161DB13B030006757C /* LaunchScreen.storyboard */; };
+		C91C16221DB13BE10006757C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C91C16211DB13BE10006757C /* Assets.xcassets */; };
+		C91C16241DB144090006757C /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C16231DB144090006757C /* LevelScene.swift */; };
+		C91C16261DB144AB0006757C /* EEJoyStick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C16251DB144AB0006757C /* EEJoyStick.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +27,11 @@
 		C91C160D1DB13B030006757C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		C91C160F1DB13B030006757C /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		C91C16121DB13B030006757C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C91C16141DB13B030006757C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C91C16171DB13B030006757C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C91C16191DB13B030006757C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C91C16211DB13BE10006757C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C91C16231DB144090006757C /* LevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
+		C91C16251DB144AB0006757C /* EEJoyStick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EEJoyStick.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,15 +64,17 @@
 		C91C16061DB13B030006757C /* EnigmaEngineSK */ = {
 			isa = PBXGroup;
 			children = (
+				C91C16211DB13BE10006757C /* Assets.xcassets */,
 				C91C16071DB13B030006757C /* AppDelegate.swift */,
 				C91C16091DB13B030006757C /* GameScene.sks */,
 				C91C160B1DB13B030006757C /* Actions.sks */,
 				C91C160D1DB13B030006757C /* GameScene.swift */,
 				C91C160F1DB13B030006757C /* GameViewController.swift */,
 				C91C16111DB13B030006757C /* Main.storyboard */,
-				C91C16141DB13B030006757C /* Assets.xcassets */,
 				C91C16161DB13B030006757C /* LaunchScreen.storyboard */,
 				C91C16191DB13B030006757C /* Info.plist */,
+				C91C16231DB144090006757C /* LevelScene.swift */,
+				C91C16251DB144AB0006757C /* EEJoyStick.swift */,
 			);
 			path = EnigmaEngineSK;
 			sourceTree = "<group>";
@@ -134,9 +140,9 @@
 			files = (
 				C91C16131DB13B030006757C /* Main.storyboard in Resources */,
 				C91C160A1DB13B030006757C /* GameScene.sks in Resources */,
-				C91C16151DB13B030006757C /* Assets.xcassets in Resources */,
 				C91C16181DB13B030006757C /* LaunchScreen.storyboard in Resources */,
 				C91C160C1DB13B030006757C /* Actions.sks in Resources */,
+				C91C16221DB13BE10006757C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,8 +154,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C91C160E1DB13B030006757C /* GameScene.swift in Sources */,
+				C91C16241DB144090006757C /* LevelScene.swift in Sources */,
 				C91C16101DB13B030006757C /* GameViewController.swift in Sources */,
 				C91C16081DB13B030006757C /* AppDelegate.swift in Sources */,
+				C91C16261DB144AB0006757C /* EEJoyStick.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

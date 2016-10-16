@@ -15,6 +15,19 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let scene = LevelScene(view.frame.size)
+        scene.scaleMode = .resizeFill
+        
+        //set up view
+        let skView = self.view as! SKView
+        skView.ignoresSiblingOrder = true
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        
+        skView.presentScene(scene)
+        
+        //DEFAULT VALUES BELOW
+        /*
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
@@ -30,6 +43,7 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+        */
     }
 
     override var shouldAutorotate: Bool {
@@ -38,7 +52,7 @@ class GameViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return UIInterfaceOrientationMask.landscapeLeft
         } else {
             return .all
         }
