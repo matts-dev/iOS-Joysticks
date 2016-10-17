@@ -19,6 +19,9 @@ class EEJoyStick: SKNode {
     var lastLocation:CGPoint?
     var timeLastUpdated = DispatchTime.now()
     
+
+    
+    
     override init(){
         //init variables so super.init() may be called
         base = SKSpriteNode(imageNamed: "ThrottleBaseAlpha.png")
@@ -26,9 +29,11 @@ class EEJoyStick: SKNode {
         super.init()
         
         //set up the base
+        base.zPosition = CGFloat(1.0)  //makes sure that base in rendered in background
         addChild(base)
         
         //set up the joy stick
+        joyStick.zPosition = CGFloat(1.5)
         addChild(joyStick)
         
     }
@@ -42,37 +47,44 @@ class EEJoyStick: SKNode {
      @return [1] = fraction representing joySticks' displacement / maximum displacement possible
     */
     func moveStick(joyStickLocation jsLoc:CGPoint, touchLocation tchLoc:CGPoint) -> [CGFloat] {
-        //Find the angle from the point zero and update
+        //Find the angle from the point zero and update (vector represents where joystick will be placed)
         var vector = CGVector(dx: tchLoc.x - jsLoc.x, dy: tchLoc.y - jsLoc.y)
         
         //Get the angle that the throttle is pointig
-        let angle = atan(vector.dy / vector.dx)
+        var angle = atan(vector.dy / vector.dx)
         
         //Check if throttle is going to move out of the base + also get fractional push value
-        let vectorAndStrengthTuple = getVectorAndStrengthFraction(currentVector: vector, calculatedAngle: angle)
+        let vectorAndStrengthAndAngleTriple = getVectorAndStrengthFractionAndAngle(currentVector: vector, calculatedAngle: angle)
         
         //The correct movement vector is at position 0 in the tuple
-        vector = vectorAndStrengthTuple.0
+        vector = vectorAndStrengthAndAngleTriple.0
         
         //the correct strength value is at position 1 in the tuple
-        let strengthFactor = vectorAndStrengthTuple.1
+        let strengthFactor = vectorAndStrengthAndAngleTriple.1
         
+        //the corrected angle for x < 0 is in spot 2
+        angle = vectorAndStrengthAndAngleTriple.2
+                
         //Update the throttle stick
         joyStick.position = CGPoint(x: vector.dx, y: vector.dy)
         
         return [angle, strengthFactor]
     }
     
-    func getVectorAndStrengthFraction(currentVector vector:CGVector, calculatedAngle angle:CGFloat) -> (CGVector, CGFloat) {
+    func getVectorAndStrengthFractionAndAngle(currentVector vector:CGVector, calculatedAngle angle:CGFloat) -> (CGVector, CGFloat, CGFloat) {
+        //Shadow angle with a new variable
+        var angle = angle
+        
         //get size of the current throttle base
         let size = base.size
         
         //joy stick may not be pefect square, so get the smaller of width/height
         var maxDist = size.width < size.height ? (size.width / 2) : (size.height / 2)
         
-        //apply joystick limited factor
+        //apply joystick movement limitation factor
         maxDist *= EEJoyStick.joystickMovementLimitingFactor
 
+        
         //need to return a smaller vector, joystick is going to leave base if either component is passed maxDist
         if maxDist < abs(vector.dx) || maxDist < abs(vector.dy){
             //Use maxDistance in pythagorean's therom to find out appropriate x and y values
@@ -81,17 +93,37 @@ class EEJoyStick: SKNode {
             
             //sign correct for quadrans where x < 0
             if vector.dx < 0 {
+                // fixing sign
                 newX *= -1
                 newY *= -1
+
+                //fix angle by adding/subtracting pi/2 
+                //NOTE: angle must be calculated here since newX/newY depend on angle before transformation
+                if angle < 0 { //positive angle
+                    angle = CGFloat.pi  + angle
+                } else { //negative angle
+                    angle = -CGFloat.pi + angle
+                }
             }
             
             //return the new vector, and a maximum strength value of 1
-            return (CGVector(dx: newX, dy: newY), CGFloat(1.0))
+            return (CGVector(dx: newX, dy: newY), CGFloat(1.0), angle)
         } else {
             //current vector is okay :)
+            
+            //fix current angle
+            if vector.dx < 0 {
+                //fix angle by adding/subtracting pi/2
+                if angle > 0 { //positive angle
+                    angle = CGFloat.pi  + angle
+                } else { //negative angle
+                    angle = -CGFloat.pi + angle
+                }
+            }
+            
             //calculate actual movement strength fractional value (actual distance / max distance)
             let movementStrengthFractionalValue = sqrt(pow(vector.dx, 2) + pow(vector.dy, 2)) / maxDist;
-            return (vector, movementStrengthFractionalValue)
+            return (vector, movementStrengthFractionalValue, angle)
         }
         
     }
@@ -119,7 +151,12 @@ class EEJoyStick: SKNode {
         }
     }
 
-    
+    func joyStickActive() -> Bool {
+        if !joyStick.position.equalTo(CGPoint(x: 0, y: 0)){
+            return true
+        }
+        return false
+    }
     
     //MARK: encoder related methods
     required init?(coder aDecoder: NSCoder) {

@@ -111,6 +111,7 @@
 				TargetAttributes = {
 					C91C16031DB13B030006757C = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = R3QAJMV667;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -280,6 +281,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = R3QAJMV667;
 				INFOPLIST_FILE = EnigmaEngineSK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = enigma22133.EnigmaEngineSK;
@@ -292,6 +294,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = R3QAJMV667;
 				INFOPLIST_FILE = EnigmaEngineSK/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = enigma22133.EnigmaEngineSK;
@@ -319,6 +322,7 @@
 				C91C161E1DB13B030006757C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
