@@ -17,6 +17,7 @@
 		C91C16221DB13BE10006757C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C91C16211DB13BE10006757C /* Assets.xcassets */; };
 		C91C16241DB144090006757C /* LevelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C16231DB144090006757C /* LevelScene.swift */; };
 		C91C16261DB144AB0006757C /* EEJoyStick.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91C16251DB144AB0006757C /* EEJoyStick.swift */; };
+		C9F9B45D1DB55D9300CCC6A9 /* BackgroundSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F9B45C1DB55D9300CCC6A9 /* BackgroundSpriteNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C91C16211DB13BE10006757C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C91C16231DB144090006757C /* LevelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelScene.swift; sourceTree = "<group>"; };
 		C91C16251DB144AB0006757C /* EEJoyStick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EEJoyStick.swift; sourceTree = "<group>"; };
+		C9F9B45C1DB55D9300CCC6A9 /* BackgroundSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundSpriteNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				C91C16191DB13B030006757C /* Info.plist */,
 				C91C16231DB144090006757C /* LevelScene.swift */,
 				C91C16251DB144AB0006757C /* EEJoyStick.swift */,
+				C9F9B45C1DB55D9300CCC6A9 /* BackgroundSpriteNode.swift */,
 			);
 			path = EnigmaEngineSK;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				C91C160E1DB13B030006757C /* GameScene.swift in Sources */,
 				C91C16241DB144090006757C /* LevelScene.swift in Sources */,
+				C9F9B45D1DB55D9300CCC6A9 /* BackgroundSpriteNode.swift in Sources */,
 				C91C16101DB13B030006757C /* GameViewController.swift in Sources */,
 				C91C16081DB13B030006757C /* AppDelegate.swift in Sources */,
 				C91C16261DB144AB0006757C /* EEJoyStick.swift in Sources */,

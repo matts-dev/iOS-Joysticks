@@ -24,6 +24,7 @@ class LevelScene: SKScene {
     let leftJS:EEJoyStick
     let scaledFrameSize:CGSize
     let backgroundSprite: SKSpriteNode
+    let background:BackgroundSpriteNode
     var baseX: CGFloat {
         get{ return scaledFrameSize.width / 2 }
     }
@@ -39,6 +40,7 @@ class LevelScene: SKScene {
         //Declaration matters - at least when using classes that contain multiple nodess
         cameraNode = SKCameraNode()
         backgroundSprite = SKSpriteNode(imageNamed: "Grass2.png")
+        background = BackgroundSpriteNode(ImageName: "Grass2.png", NumberOfTiles: 10)
         rightJS = EEJoyStick()
         leftJS = EEJoyStick()
         player = SKSpriteNode(imageNamed: "GenericActorSprite.png")
@@ -51,8 +53,10 @@ class LevelScene: SKScene {
         super.init(size: scaledFrameSize)
         
         //Background
-        self.backgroundColor = SKColor.gray
+        self.backgroundColor = SKColor.black
+        background.position = CGPoint(x: -frame.size.width / 3, y: -frame.size.height / 3)
         addChild(backgroundSprite)
+        addChild(background)
         
         //Camera Placement
         cameraNode.position = CGPoint(x: baseX/2, y: baseY/2)
@@ -176,6 +180,7 @@ class LevelScene: SKScene {
         rightJS = aDecoder.decodeObject(forKey: "rightJS") as! EEJoyStick
         leftJS = aDecoder.decodeObject(forKey: "leftJS") as! EEJoyStick
         backgroundSprite = aDecoder.decodeObject(forKey: "backgroundSprite") as! SKSpriteNode
+        background = aDecoder.decodeObject(forKey: "background") as! BackgroundSpriteNode
         player = aDecoder.decodeObject(forKey: "player") as! SKSpriteNode
 
         super.init(coder: aDecoder)
@@ -187,6 +192,7 @@ class LevelScene: SKScene {
         aCoder.encode(rightJS, forKey: "rightJS")
         aCoder.encode(leftJS, forKey: "leftJS")
         aCoder.encode(backgroundSprite, forKey: "backgroundSprite")
+        aCoder.encode(background, forKey: "background")
         aCoder.encode(player, forKey: "player")
     }
     
