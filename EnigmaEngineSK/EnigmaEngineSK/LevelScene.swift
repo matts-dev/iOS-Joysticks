@@ -84,8 +84,8 @@ class LevelScene: SKScene {
     //MARK: touches
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //test by moving player to click, which should move camera
-        let ftouch = touches.first!
-        let ftloc = ftouch.location(in: self)
+        //let ftouch = touches.first!
+        //let ftloc = ftouch.location(in: self)
         
         //convert view coordinates to scene coordinates
         // ???
@@ -95,6 +95,12 @@ class LevelScene: SKScene {
         //player.run(SKAction.move(to: touchPt, duration: 2), withKey: "moving player")
     }
     
+
+    //this does not save a refernce to the touch (though one could) because I envisioned the user
+    //tapping the joy stick (which I belive would invalid any reference to a touch) in order to do an
+    //action (such as shoot). So, instead touches are evaluated in terms of proximity to a given joy stick,
+    //this way the user could tap the joy stick to do an action (such as shoot, crouch, etc.). There could be a delay
+    //instated before a joy stick is reset
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches{
             let touchLoc = touch.location(in: self)
@@ -111,13 +117,20 @@ class LevelScene: SKScene {
             if touchLoc.y < frame.size.height * 0.50 + displace.y{
                 //if it is in the left 1/3 of screen
                 if touchLoc.x <= frame.size.width * 0.33 + displace.x {
-                    leftMovementData = leftJS.moveStick(joyStickLocation: leftJS.position, touchLocation: touchLoc)
+                    leftMovementData = leftJS.moveStick(joyStickLocation: leftJS.position, touchLocation: touchLoc, touch: touch)
                 }
                 //if it is in the right 1/3 of screen
                 else if touchLoc.x >= frame.size.width * 0.66 + displace.x {
-                    rightMovementData = rightJS.moveStick(joyStickLocation: rightJS.position, touchLocation: touchLoc)
+                    rightMovementData = rightJS.moveStick(joyStickLocation: rightJS.position, touchLocation: touchLoc, touch: touch)
                 }
             }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches{
+            rightJS.signalTouchEnded(touch: touch)
+            leftJS.signalTouchEnded(touch: touch)
         }
     }
     
@@ -233,8 +246,10 @@ class LevelScene: SKScene {
         if leftMovementData != nil && leftJS.joyStickActive(){
             updatePlayerPosition(JoystickData: leftMovementData!)
         }
+        rightJS.joystickUpdateMethod()
+        leftJS.joystickUpdateMethod()
         clearJoyStickData()
-
+        
         
         //Camera Updated To Player Position
         cameraNode.position = player.position

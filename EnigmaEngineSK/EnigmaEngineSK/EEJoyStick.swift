@@ -12,14 +12,16 @@ import GameplayKit
 
 class EEJoyStick: SKNode {
     //joystick maximum displacement is to put center at rim; this factor is to reduce how much joystick can move
-    static let joystickMovementLimitingFactor = CGFloat(0.5) //multiplied by maximum joystick movement
+    private static let joystickMovementLimitingFactor = CGFloat(0.5) //multiplied by maximum joystick movement
+    private static let DEFAULT_POINT = CGPoint(x: 0, y: 0)
+    private static let maximumNanosecondDelay:UInt64 = 5_000_000
     
-    var base : SKSpriteNode
-    var joyStick : SKSpriteNode
-    var lastLocation:CGPoint?
-    var timeLastUpdated = DispatchTime.now()
     
-
+    private var base : SKSpriteNode
+    private var joyStick : SKSpriteNode
+    private var lastLocation:CGPoint?
+    private var timeLastUpdated = DispatchTime.now()
+    private var lastTouch:UITouch? = nil
     
     
     override init(){
@@ -46,9 +48,15 @@ class EEJoyStick: SKNode {
      @return [0] = angle in radians of the joystick
      @return [1] = fraction representing joySticks' displacement / maximum displacement possible
     */
-    func moveStick(joyStickLocation jsLoc:CGPoint, touchLocation tchLoc:CGPoint) -> [CGFloat] {
+    func moveStick(joyStickLocation jsLoc:CGPoint, touchLocation tchLoc:CGPoint, touch: UITouch) -> [CGFloat] {
         //Find the angle from the point zero and update (vector represents where joystick will be placed)
         var vector = CGVector(dx: tchLoc.x - jsLoc.x, dy: tchLoc.y - jsLoc.y)
+        
+        //update time last moved
+        timeLastUpdated = DispatchTime.now()
+        
+        //update touch (used in joystick time out)
+        lastTouch = touch
         
         //Get the angle that the throttle is pointig
         var angle = atan(vector.dy / vector.dx)
@@ -134,20 +142,20 @@ class EEJoyStick: SKNode {
     }
     
     func joystickUpdateMethod(){
-        //remove last point touched if time limit is up
-        if lastLocation != nil {
-            //validateLastPointShouldBeActive()
-        }
+        validateLastPointShouldBeActive()
         
     }
     
     func validateLastPointShouldBeActive(){
         //get interval in nanoseconds
-        let interval = timeLastUpdated.uptimeNanoseconds - DispatchTime.now().uptimeNanoseconds
-        
-        
-        if interval * (1 / NSEC_PER_MSEC) > 500 {
+        let timeNow = DispatchTime.now().uptimeNanoseconds
+        let interval = timeNow - timeLastUpdated.uptimeNanoseconds
+    
+        //check if the joystick hasn't been touched for longer than the tolerated amount of time
+        if interval > EEJoyStick.maximumNanosecondDelay && lastTouch == nil{
             lastLocation = nil
+            joyStick.position = EEJoyStick.DEFAULT_POINT
+            //joyStick.run(SKAction.move(to: EEJoyStick.DEFAULT_POINT, duration: 0.02))
         }
     }
 
@@ -156,6 +164,12 @@ class EEJoyStick: SKNode {
             return true
         }
         return false
+    }
+    
+    func signalTouchEnded(touch:UITouch){
+        if(lastTouch == touch){
+            lastTouch = nil
+        }
     }
     
     //MARK: encoder related methods
